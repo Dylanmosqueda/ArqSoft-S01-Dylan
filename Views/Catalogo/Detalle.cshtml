@@ -1,187 +1,28 @@
 ﻿@model Catalogo.Models.Item
 
 @{
-    ViewData["Title"] = "Umbrella Corp - Registro de Activos";
+  
 }
 
-<style>
-    body {
-        background-color: #0a0a0a;
-        background-image: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
-        color: #e0e0e0;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    .umbrella-form-container {
-        max-width: 700px;
-        margin: 50px auto;
-        background: rgba(10, 10, 10, 0.9);
-        border: 1px solid #444;
-        border-top: 4px solid #ff0000;
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
-        padding: 40px;
-        position: relative;
-    }
-
-    .terminal-header {
-        border-bottom: 1px solid #333;
-        margin-bottom: 30px;
-        padding-bottom: 10px;
-    }
-
-    .terminal-header h1 {
-        color: #fff;
-        font-size: 1.5rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 0;
-    }
-
-    .form-group label {
-        color: #ff0000;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        font-weight: bold;
-        letter-spacing: 1px;
-        margin-bottom: 8px;
-        display: block;
-    }
-
-    .form-control {
-        background: #111 !important;
-        border: 1px solid #333 !important;
-        color: #00ff00 !important; /* Texto verde estilo terminal */
-        font-family: 'Courier New', monospace;
-        border-radius: 0;
-        margin-bottom: 20px;
-        transition: all 0.3s;
-    }
-
-    .form-control:focus {
-        border-color: #ff0000 !important;
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3) !important;
-        outline: none;
-    }
-
-    .btn-save {
-        background: transparent;
-        color: #ff0000;
-        border: 1px solid #ff0000;
-        text-transform: uppercase;
-        font-weight: bold;
-        width: 100%;
-        padding: 12px;
-        letter-spacing: 2px;
-        transition: 0.4s;
-        cursor: pointer;
-    }
-
-    .btn-save:hover {
-        background: #ff0000;
-        color: white;
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-    }
-
-    .btn-cancel {
-        color: #666;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        display: inline-block;
-        margin-top: 20px;
-        transition: 0.3s;
-    }
-
-    .btn-cancel:hover {
-        color: #fff;
-    }
-
-    .status-light {
-        width: 10px;
-        height: 10px;
-        background: #ff0000;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 10px;
-        box-shadow: 0 0 5px #ff0000;
-        animation: blink 1s infinite;
-    }
-
-    @@keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0.3; }
-        100% { opacity: 1; }
-    }
-
-    .umbrella-logo-bg {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        width: 80px;
-        opacity: 0.05;
-        pointer-events: none;
-    }
 </style>
+                    
+         <div style="flex: 1;">
+            <img src="@Model.ImagenUrl" 
+                 alt="@Model.Titulo" 
+                 style="width: 100%; max-width: 400px; border: 4px solid #fff; border-radius: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.1);" />
+        </div>
 
-<div class="umbrella-form-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Umbrella_Corporation_logo.svg/1024px-Umbrella_Corporation_logo.svg.png" class="umbrella-logo-bg" alt="Logo">
-
-    <div class="terminal-header d-flex justify-content-between align-items-center">
-        <h1><span class="status-light"></span> SUBIDA DE DATOS: NUEVO ACTIVO</h1>
-        <small class="text-muted">SERVER: RACCOON-MAIN</small>
-    </div>
-
-    <form asp-action="Agregar" method="post">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Nombre del Activo / Título</label>
-                    <input asp-for="Titulo" class="form-control" placeholder="Ingrese nombre..." required />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Categoría / Género</label>
-                    <input asp-for="Genero" class="form-control" placeholder="Ej: Agente, Survival..." required />
-                </div>
+        <div style="flex: 1.5;">
+            <h1 style="color: #ff3333; margin-top: 0;">@Model.Titulo</h1>
+            <p style="font-size: 1.2em;"><strong>Género:</strong> @Model.Genero</p>
+            <p style="font-size: 1.2em;"><strong>Consola:</strong> @Model.Consola</p>
+            <p style="font-size: 1.2em;"><strong>Año:</strong> @Model.Ano</p>
+            
+            <div style="margin-top: 20px; padding: 15px; background-color: #2a0a0a; border-radius: 8px;">
+                <p><strong>Descripción:</strong></p>
+                <p style="line-height: 1.6;">@Model.Descripcion</p>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Plataforma / Consola / Rango</label>
-                    <input asp-for="Consola" class="form-control" placeholder="Ej: PlayStation, DA..." required />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Año de Registro</label>
-                    <input asp-for="Ano" type="number" class="form-control" placeholder="2024" required />
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>URL de Imagen (Registro Visual)</label>
-            <input asp-for="ImagenUrl" class="form-control" placeholder="https://..." />
-        </div>
-
-        <div class="form-group">
-            <label>Reporte Detallado / Descripción</label>
-            <textarea asp-for="Descripcion" class="form-control" rows="4" placeholder="Escriba el informe aquí..."></textarea>
-        </div>
-
-        <div class="mt-4">
-            <button type="submit" class="btn-save">
-                Confirmar Registro y Guardar en DB
-            </button>
-        </div>
-    </form>
-
-    <div class="text-center">
-        <a asp-action="Index" class="btn-cancel">
-            <i class="bi bi-x-circle"></i> Abortar Operación y Volver
-        </a>
     </div>
 </div>
