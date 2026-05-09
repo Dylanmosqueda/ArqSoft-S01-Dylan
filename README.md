@@ -4,3 +4,4 @@ Este proyecto es una Aplicación Web de Catálogo de Videojuegos. Su propósito 
 
 
 Tecnologias Utilizadas: Utilice IA estudio para cambiarle el estilo de animacion de el index, de detalle y el site para que se viera mas mejor 
+<img width="1920" height="1080" alt="Captura de pantalla 2026-05-08 194048" src="https://github.com/user-attachments/assets/1aab16ff-02e9-416d-a098-3c0767b19767" />
