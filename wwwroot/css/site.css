@@ -1,5 +1,14 @@
-/* Estilo Resident Evil mejorado con nuevas animaciones en movimiento */
+<!DOCTYPE html >
+<html lang="es" >
+<head >
+<meta charset="UTF-8" >
+<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+<title > Resident Evil Archive</title >
+<!-- Fuentes de Google -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;700&display=swap" rel="stylesheet" >
 
+<style >
+/* --- ESTILOS GENERALES --- */
 html {
     font-size: 15px;
     position: relative;
@@ -13,7 +22,7 @@ html {
     }
 }
 
-/* 1. Animación de entrada tipo suspenso */
+/* --- ANIMACIONES --- */
 @keyframes shadowReveal {
     0% {
         opacity: 0;
@@ -33,7 +42,6 @@ html {
     }
 }
 
-/* 2. NUEVA: Animación de fondo en movimiento continuo (Niebla densa/Sangre) */
 @keyframes creepingBackground {
     0% {
         background-position: 0% 50%;
@@ -48,24 +56,18 @@ html {
     }
 }
 
-/* 3. NUEVA: Animación de levitación macabra para las tarjetas */
 @keyframes eerieFloat {
-    0% {
+    0%, 100% {
         transform: translateY(0);
     }
 
     50% {
         transform: translateY(-8px);
     }
-
-    100% {
-        transform: translateY(0);
-    }
 }
 
-/* 4. Animación de pulso rojo */
 @keyframes redPulse {
-    0% {
+    0%, 100% {
         box-shadow: 0 0 5px rgba(120, 0, 0, 0.2);
         text-shadow: 0 0 2px rgba(255, 0, 0, 0.2);
     }
@@ -74,155 +76,192 @@ html {
         box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
         text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
     }
-
-    100% {
-        box-shadow: 0 0 5px rgba(120, 0, 0, 0.2);
-        text-shadow: 0 0 2px rgba(255, 0, 0, 0.2);
-    }
 }
 
-/* 5. Animación de vibración leve (Mejorada con rotación) */
-@keyframes horrorShake {
+/* Nueva: Animación de movimiento para imágenes (Zoom lento) */
+@keyframes imageMovement {
     0% {
-        transform: translateX(0) rotate(0);
-    }
-
-    25% {
-        transform: translateX(2px) rotate(0.5deg);
+        transform: scale(1) translate(0, 0);
     }
 
     50% {
-        transform: translateX(-2px) rotate(-0.5deg);
-    }
-
-    75% {
-        transform: translateX(2px) rotate(0.5deg);
+        transform: scale(1.1) translate(-1%, -1%);
     }
 
     100% {
-        transform: translateX(0) rotate(0);
+        transform: scale(1) translate(0, 0);
     }
 }
 
-/* Fondo general */
+/* --- CUERPO --- */
 body {
     margin: 0;
-    margin-bottom: 60px;
-    font-family: 'Cinzel', 'Georgia', serif;
-    /* Se hace el degradado más grande (300%) para permitir el movimiento */
+    padding: 0;
+    font-family: 'Cinzel', serif;
     background: linear-gradient(135deg, #050505, #240000, #0a0a0a, #150000);
     background-size: 300% 300%;
     color: #e6e6e6;
-    letter-spacing: 1px;
-    /* Combinamos la revelación inicial con el movimiento de fondo infinito */
     animation: shadowReveal 1.5s ease-in-out, creepingBackground 15s ease-in-out infinite;
+    overflow-x: hidden;
 }
 
-/* Botones */
+/* --- CONTENEDORES DE IMAGEN CON MOVIMIENTO --- */
+.img-container-horror {
+    position: relative;
+    overflow: hidden; /* Corta el exceso del zoom */
+    border: 1px solid #500000;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+    .img-container-horror img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: brightness(0.7) contrast(1.2) sepia(0.2);
+        animation: imageMovement 20s linear infinite; /* Movimiento constante */
+    }
+
+    /* Capa de suciedad/sangre sobre la imagen */
+    .img-container-horror::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.8) 100%);
+        pointer-events: none;
+    }
+
+/* --- SECCIÓN DE ENTRADA (INICIO) --- */
+.hero-section {
+    height: 60vh;
+    width: 100%;
+    position: relative;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+}
+
+    .hero-content h1 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 5rem;
+        margin: 0;
+        color: #fff;
+        text-shadow: 0 0 15px #ff0000;
+        letter-spacing: 10px;
+    }
+
+/* --- DISEÑO DEL CATÁLOGO --- */
+.catalog-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border-top: 2px solid #6b0000;
+    backdrop-filter: blur(5px);
+    animation: shadowReveal 2s ease-out;
+}
+
+/* Estilo para la info del catálogo (basado en tu snippet) */
+.info-panel {
+    flex: 1.5;
+    padding: 10px;
+}
+
+    .info-panel h1 {
+        color: #ff3333;
+        margin-top: 0;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 3.5rem;
+        letter-spacing: 2px;
+    }
+
+    .info-panel p {
+        font-size: 1.2em;
+        margin: 10px 0;
+        border-bottom: 1px solid #300;
+        padding-bottom: 5px;
+    }
+
+    .info-panel strong {
+        color: #ff4d4d;
+    }
+
+.description-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1a0505; /* Un poco más oscuro */
+    border-left: 4px solid #b30000;
+    border-radius: 4px;
+    box-shadow: inset 0 0 15px #000;
+}
+
+    .description-container p {
+        border: none;
+        line-height: 1.6;
+        font-style: italic;
+    }
+
+/* Botón estilo RE */
 .btn {
-    border-radius: 3px;
-    padding: 12px 24px;
-    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: #6b0000;
+    color: white;
+    text-decoration: none;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 2px;
-    background: #6b0000;
-    color: #ffffff;
-    border: 1px solid #b30000;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
+    border: 1px solid #ff0000;
     animation: redPulse 2.5s infinite;
+    transition: 0.3s;
 }
 
     .btn:hover {
-        background: #990000;
-        transform: scale(1.06);
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        background: #ff0000;
+        transform: scale(1.1);
     }
+</style >
+</head >
+<div class="horror-list-container" >
+<h1 class="horror-title" > Mi Catálogo</h1 >
 
-    /* Focus */
-    .btn:focus,
-    .btn:active:focus,
-    .btn-link.nav-link:focus,
-    .form-control:focus,
-    .form-check-input:focus {
-        box-shadow: 0 0 0 0.15rem rgba(255,255,255,0.08), 0 0 0 0.3rem #b30000;
-        border-color: #b30000;
-        outline: none;
-    }
+<nav class="filter-nav" >
+<a href="#" > Todos</a > |
+<a href="#" > Hack and Slash</a > |
+<a href="#" > Metroidvania</a > |
+<a href="#" > Survival Horror</a >
+</nav >
 
-/* Inputs */
-.form-control {
-    border-radius: 4px;
-    border: 1px solid #4d0000;
-    padding: 12px;
-    background-color: #121212;
-    color: #f5f5f5;
-    font-family: 'Georgia', serif;
-    transition: all 0.3s ease;
-}
+<ul style="padding: 0;" >
+<!-- Ejemplo de un item (repite esto en tu foreach) -->
+<li class="horror-item" >
+<div >
+<a href="/TuRuta/Details/1" > Devil May Cry</a >
+<span style="color: #888; margin-left: 10px;" > -- Hack and Slash (2001)</span >
+</div >
+<span style="color: #444;" > ☣</span >
+</li >
 
-    .form-control:focus {
-        border-color: #cc0000;
-        background-color: #1b1b1b;
-        color: #fff;
-        animation: horrorShake 0.3s ease-in-out;
-    }
+<li class="horror-item" >
+<div >
+<a href="#" > Resident Evil 4</a >
+<span style="color: #888; margin-left: 10px;" > -- Survival Horror (2005)</span >
+</div >
+<span style="color: #444;" > ☣</span >
+</li >
+</ul >
 
-/* Checkbox */
-.form-check-input {
-    cursor: pointer;
-    accent-color: #b30000;
-}
-
-/* Placeholder */
-.form-floating > .form-control-plaintext::placeholder,
-.form-floating > .form-control::placeholder {
-    color: #888;
-    text-align: end;
-    font-style: italic;
-    transition: all 0.3s ease;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder,
-.form-floating > .form-control:focus::placeholder {
-    text-align: start;
-    color: #ff4d4d;
-    /* Pequeño movimiento al enfocarse en el input */
-    transform: translateX(5px);
-}
-
-/* Navbar */
-.nav-link {
-    color: #d9d9d9;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-}
-
-    .nav-link:hover {
-        color: #ff3c3c;
-        text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-        transform: scale(1.05);
-    }
-
-/* Tarjetas */
-.card {
-    background: rgba(15, 15, 15, 0.96);
-    border: 1px solid #500000;
-    border-radius: 6px;
-    box-shadow: 0 0 20px rgba(120, 0, 0, 0.2);
-    transition: all 0.4s ease;
-    color: #f5f5f5;
-    /* Añadimos la animación flotante para que parezcan "respirar" */
-    animation: shadowReveal 1.2s ease-in-out, eerieFloat 6s ease-in-out infinite;
-}
-
-    .card:hover {
-        /* Efecto agresivo al pasar el mouse */
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 0 35px rgba(200, 0, 0, 0.6);
-        border-color: #990000;
-        z-index: 10;
-    }
+<a href="#" class="btn-add" > + AGREGAR VIDEOJUEGO</a >
+</div >

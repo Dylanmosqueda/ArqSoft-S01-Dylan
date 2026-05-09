@@ -1,27 +1,149 @@
 ﻿@model List<Catalogo.Models.Item>
-<h1>Mi Catálogo</h1>
 
-<!-- Filtro por género -->
-<div>
-    <a asp-action = "Index">Todos</a>
-    @foreach (var gen in ViewBag.Generos as List<string>)
-    {
-        <span > | </span >
-        <a asp-action = "Index" asp-route-genero = "@gen">@gen </a >
- }
+<style>
+    /* 1. ELIMINAR LA LÍNEA BLANCA Y EL FOOTER "PRIVACY" A LA FUERZA */
+    footer, .footer, .border-top { 
+        display: none !important; 
+        border: none !important; 
+        opacity: 0 !important; 
+        visibility: hidden !important; 
+        height: 0 !important; 
+    }
+    main { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+
+    /* 2. Fondo Global Resident Evil */
+    body {
+        background-color: #050505 !important;
+        background-image: 
+            linear-gradient(rgba(204, 0, 0, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(204, 0, 0, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        color: #d8d8d8;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    /* Línea de escaneo global */
+    body::after {
+        content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 2px;
+        background: rgba(255, 0, 0, 0.15);
+        animation: scanline 5s linear infinite; z-index: 9999; pointer-events: none;
+    }
+    @@keyframes scanline { 0% { top: -5%; } 100% { top: 105%; } }
+
+    /* 3. ANIMACIÓN DE LA REINA ROJA 100% CÓDIGO (SIN VIDEOS EXTERNOS) */
+    .red-queen-container {
+        position: relative; height: 350px; overflow: hidden; margin-bottom: 30px; 
+        background: radial-gradient(circle at center, #1a0000 0%, #000000 80%);
+        border: 2px solid #8a0303; box-shadow: 0 0 20px rgba(204, 0, 0, 0.3);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+
+    /* El ojo de la Reina Roja pulsando */
+    .red-queen-eye {
+        position: absolute; width: 300px; height: 300px; border-radius: 50%;
+        background: radial-gradient(circle at center, rgba(255,0,0,0.6) 0%, rgba(100,0,0,0.2) 40%, transparent 70%);
+        animation: pulseEye 2s infinite alternate; z-index: 1; pointer-events: none;
+    }
+
+    /* Radar barriendo la pantalla */
+    .radar-sweep {
+        position: absolute; width: 150%; height: 2px; background: rgba(255, 0, 0, 0.8);
+        box-shadow: 0 0 15px red; top: 50%; left: -25%;
+        animation: radarRotate 4s infinite linear; z-index: 1; pointer-events: none;
+    }
+
+    @@keyframes pulseEye { 0% { transform: scale(0.9); opacity: 0.6; } 100% { transform: scale(1.1); opacity: 1; } }
+    @@keyframes radarRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* 4. Textos y Títulos */
+    .main-title {
+        color: #ff1a1a; text-shadow: 0 0 10px red; font-weight: 900;
+        text-transform: uppercase; font-family: 'Arial', sans-serif; z-index: 2; position: relative;
+    }
+
+    /* 5. Tarjetas (Cards) estilo archivo confidencial */
+    .card {
+        background-color: #0a0a0a !important; color: white !important;
+        border: 1px solid #4a0000 !important; border-radius: 0 !important; transition: 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-5px); box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5) !important;
+        border-color: #ff0000 !important;
+    }
+    .card-body { background-color: #111 !important; border-top: 2px solid #8a0303; }
+
+    /* Botones */
+    .btn-umbrella {
+        background-color: #8a0303; color: white; border: 1px solid #cc0000; border-radius: 0; font-weight: bold;
+    }
+    .btn-umbrella:hover { background-color: #cc0000; color: white; box-shadow: 0 0 10px red; }
+</style>
+
+<!-- SCRIPT ADICIONAL PARA DESTRUIR EL FOOTER (LÍNEA BLANCA) -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var footers = document.getElementsByTagName("footer");
+        for(var i=0; i<footers.length; i++) { footers[i].style.display = "none"; }
+    });
+</script>
+
+<!-- HEADER ANIMADO "RED QUEEN" (No usa videos, no puede fallar) -->
+<div class="red-queen-container shadow">
+    <div class="red-queen-eye"></div>
+    <div class="radar-sweep"></div>
+    
+    <div style="z-index: 2; text-align: center; background: rgba(0,0,0,0.4); padding: 20px; border: 1px solid rgba(255,0,0,0.3);">
+        <h1 class="main-title" style="letter-spacing: 5px; font-size: 2.8rem; margin: 0;">
+            UMBRELLA CORP. ARCHIVES
+        </h1>
+        <p style="color: #ff4d4d; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 5px red; margin-top: 10px;">[ RED QUEEN SYSTEM // ACCESO RESTRINGIDO A DATOS B.O.W. ]
+        </p>
+    </div>
 </div>
 
-<hr />
+<h1 class="text-center my-4 main-title" style="font-size: 1.8rem;">CATALOGO DE VIDEOJUEGOS</h1>
 
-<!-- Lista de items -->
-<ul >
-        @foreach (var item in Model)
-        {
-         <li>
-            <a asp-action ="Detalle" asp-route-id ="@item.Id"> @item.Titulo</a >
-              -- @item.Genero (@item.Ano)
-           </li>
-        }
-    </ul >
-    <hr/>
-    <a asp-action = "Agregar">+ Agregar Videojuego</a>
+<!-- Filtro por género -->
+<div class="text-center mb-5">
+    <a asp-action="Index" class="btn btn-umbrella btn-sm mx-1 px-4 py-2">Todos</a>
+    @foreach (var gen in ViewBag.Generos as List<string>)
+    {
+        <a asp-action="Index" asp-route-genero="@gen" class="btn btn-outline-danger btn-sm mx-1 px-3 py-2" style="border-radius: 0;">@gen</a>
+    }
+</div>
+
+<!-- Lista de items en Tarjetas -->
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="@(item.GetType().GetProperty("ImagenUrl") != null ? item.GetType().GetProperty("ImagenUrl").GetValue(item) : "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Umbrella_Corporation_logo.svg/512px-Umbrella_Corporation_logo.svg.png")" 
+                     class="card-img-top p-3" 
+                     alt="@item.Titulo" 
+                     style="height: 250px; object-fit: contain; background-color: #030303; filter: contrast(1.2) grayscale(20%);">
+                
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold text-white font-monospace" style="letter-spacing: 1px;">@item.Titulo</h5>
+                    
+                    <span class="badge mb-3" style="background-color: #8a0303; border: 1px solid red; font-size: 0.9rem;">@item.Genero</span>
+                    
+                    <p class="small" style="color: #888;">AÑO DE REGISTRO: <strong class="text-danger">@item.Ano</strong></p>
+                    
+                    <a asp-action="Detalle" asp-route-id="@item.Id" class="btn btn-umbrella btn-sm w-100 mt-2" style="letter-spacing: 1px;">
+                        [ VER EXPEDIENTE ]
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<hr style="border-color: #4a0000; box-shadow: 0 0 5px #8a0303;" />
+
+<!-- Botón Agregar -->
+<div class="text-center mb-5 mt-4 pb-5">
+    <a asp-action="Agregar" class="btn btn-outline-danger btn-lg shadow" style="border-width: 2px; border-radius: 0; font-family: 'Arial', sans-serif; font-weight: 800; letter-spacing: 2px;">
+        + AGREGAR VIDEOJUEGO
+    </a>
+</div>
